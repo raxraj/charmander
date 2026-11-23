@@ -1,0 +1,235 @@
+---
+import CurrentlyObsessed from "./CurrentlyObsessed.astro";
+import type { ObsessionItem, SiteMeta } from "../data/types";
+
+interface Props {
+  obsessedItems: ObsessionItem[];
+  meta: SiteMeta;
+}
+
+const { obsessedItems, meta } = Astro.props;
+---
+
+<footer class="bottom-editorial-section" aria-label="Publication Footer and Obsessions">
+  <!-- Column 1: Currently Obsessed With -->
+  <div class="bottom-col-obsessed">
+    <CurrentlyObsessed items={obsessedItems} />
+  </div>
+
+  <!-- Column 2: Companion Desk Scene -->
+  <div class="bottom-col-companion">
+    <img
+      src="/assets/illustrations/bottom-companion-scene.png"
+      alt="Pixel art companion robot at desk debugging life"
+      class="companion-scene-img pixel-canvas"
+      width="349"
+      height="201"
+      loading="lazy"
+    />
+  </div>
+
+  <!-- Column 3: Publication Brand & Socials -->
+  <div class="bottom-col-brand">
+    <!-- Sub-Block Left: Brand Statement -->
+    <div class="brand-statement-block">
+      <div class="brand-banner">
+        SOURCASTIC DEV BLOGS
+      </div>
+      <div class="brand-statement-content">
+        <p class="brand-quote">
+          Made with curiosity.<br />
+          Debugged with questionable<br />
+          amounts of coffee.
+        </p>
+        <div class="cli-cursor" aria-hidden="true">&gt;_</div>
+      </div>
+    </div>
+
+    <!-- Sub-Block Right: Social Grid & Est -->
+    <div class="brand-social-block">
+      <!-- 4 Social Icons Row -->
+      <div class="social-icons-row">
+        <!-- GitHub -->
+        <a href="https://github.com" class="social-icon-box" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"></path>
+          </svg>
+        </a>
+
+        <!-- X -->
+        <a href="https://x.com" class="social-icon-box" aria-label="X / Twitter" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+          </svg>
+        </a>
+
+        <!-- YouTube -->
+        <a href="https://youtube.com" class="social-icon-box" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>
+          </svg>
+        </a>
+
+        <!-- RSS -->
+        <a href="/rss.xml" class="social-icon-box" aria-label="RSS Feed">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <circle cx="6.18" cy="17.82" r="2.18"></circle>
+            <path d="M4 4.44v2.83c9.19 0 16.66 7.47 16.66 16.66h2.83C23.49 13.19 14.81 4.44 4 4.44zM4 10.1v2.83c6.07 0 11.02 4.95 11.02 11.02h2.83c0-7.63-6.22-13.85-13.85-13.85z"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- EST 2026 Strip -->
+      <div class="est-strip">
+        <span class="est-text">EST. {meta.established}</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .bottom-editorial-section {
+    display: grid;
+    grid-template-columns: 290px 340px 1fr;
+    background-color: var(--bg-primary);
+  }
+
+  .bottom-col-obsessed {
+    border-right: 1px solid var(--border-color);
+  }
+
+  .bottom-col-companion {
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-primary);
+    overflow: hidden;
+  }
+
+  .companion-scene-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    image-rendering: pixelated;
+  }
+
+  .bottom-col-brand {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    background-color: var(--bg-primary);
+  }
+
+  .brand-statement-block {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+  }
+
+  .brand-banner {
+    background-color: var(--color-black);
+    color: #FFFFFF;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    padding: 0.65rem 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  :root[data-theme="dark"] .brand-banner {
+    background-color: var(--color-offwhite);
+    color: var(--color-black);
+  }
+
+  .brand-statement-content {
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    gap: 1rem;
+  }
+
+  .brand-quote {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .cli-cursor {
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .brand-social-block {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .social-icons-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .social-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    border-right: 1px solid var(--border-color);
+    color: var(--text-primary);
+    transition: background-color 0.1s ease, color 0.1s ease;
+  }
+
+  .social-icon-box:last-child {
+    border-right: none;
+  }
+
+  .social-icon-box:hover {
+    background-color: var(--accent-blue);
+    color: #FFFFFF;
+  }
+
+  .est-strip {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-primary);
+  }
+
+  .est-text {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 990px) {
+    .bottom-editorial-section {
+      grid-template-columns: 1fr;
+    }
+    .bottom-col-obsessed,
+    .bottom-col-companion {
+      border-right: none;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .bottom-col-brand {
+      grid-template-columns: 1fr;
+    }
+    .brand-statement-block {
+      border-right: none;
+      border-bottom: 1px solid var(--border-color);
+    }
+  }
+</style>

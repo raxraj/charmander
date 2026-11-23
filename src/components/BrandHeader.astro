@@ -1,0 +1,109 @@
+---
+import type { SiteMeta } from "../data/types";
+
+interface Props {
+  meta: SiteMeta;
+}
+
+const { meta } = Astro.props;
+---
+
+<section class="masthead-grid" aria-label="Publication Masthead">
+  <!-- Left Main Wordmark & Tagline -->
+  <div class="masthead-main">
+    <div class="wordmark-row">
+      <h1 class="pixel-wordmark">
+        SOURCASTIC.
+      </h1>
+      <span class="electric-blue-block" aria-hidden="true"></span>
+    </div>
+    <p class="tagline">{meta.tagline}</p>
+  </div>
+
+  <!-- Right Editorial Dispatch Note -->
+  <div class="masthead-aside">
+    <p class="aside-text">{meta.description}</p>
+  </div>
+</section>
+
+<style>
+  .masthead-grid {
+    display: grid;
+    grid-template-columns: 1fr 310px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+  }
+
+  .masthead-main {
+    padding: 2.25rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--border-color);
+  }
+
+  .wordmark-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .pixel-wordmark {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 8vw, 6.4rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .electric-blue-block {
+    display: inline-block;
+    width: clamp(24px, 3.5vw, 44px);
+    height: clamp(24px, 3.5vw, 44px);
+    background-color: var(--accent-blue);
+    flex-shrink: 0;
+    margin-bottom: 0.2rem;
+  }
+
+  .tagline {
+    margin-top: 1rem;
+    font-family: var(--font-sans);
+    font-size: clamp(1rem, 1.4vw, 1.25rem);
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .masthead-aside {
+    padding: 2.25rem 1.75rem;
+    display: flex;
+    align-items: flex-start;
+    background-color: var(--bg-primary);
+  }
+
+  .aside-text {
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.55;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .masthead-grid {
+      grid-template-columns: 1fr;
+    }
+    .masthead-main {
+      border-right: none;
+      border-bottom: 1px solid var(--border-color);
+      padding: 1.75rem 1.25rem;
+    }
+    .masthead-aside {
+      padding: 1.25rem;
+    }
+  }
+</style>

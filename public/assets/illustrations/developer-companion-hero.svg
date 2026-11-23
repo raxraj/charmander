@@ -1,0 +1,234 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 380" width="100%" height="100%" shape-rendering="crispEdges">
+  <defs>
+    <!-- Pixel Patterns & Styles -->
+    <style>
+      .bg-grid { fill: var(--bg-secondary, #EBEBE8); }
+      .px-border { fill: var(--border-color, #080808); }
+      .px-white { fill: #FFFFFF; }
+      .px-cream { fill: #F4F4F0; }
+      .px-dark { fill: #181818; }
+      .px-hoodie { fill: #202026; }
+      .px-hoodie-hi { fill: #33333F; }
+      .px-skin { fill: #FFDCB2; }
+      .px-hair { fill: #101014; }
+      .px-blue { fill: #1717F5; }
+      .px-cyan { fill: #00F0FF; }
+      .px-orange { fill: #FF6B35; }
+      .px-yellow { fill: #FFD000; }
+      .px-green { fill: #00E676; }
+      .px-gray { fill: #888888; }
+      .dialog-bg { fill: var(--bg-primary, #F4F4F2); }
+      .dialog-text { font-family: 'IBM Plex Mono', 'Courier New', monospace; font-size: 11px; font-weight: 600; fill: var(--text-primary, #080808); }
+      .dialog-label { font-family: 'IBM Plex Mono', 'Courier New', monospace; font-size: 9px; font-weight: 700; }
+    </style>
+  </defs>
+
+  <!-- Illustration Frame & Retro Grid Surface -->
+  <rect x="0" y="0" width="540" height="380" class="bg-grid" />
+  
+  <!-- Subtle pixel grid texture background -->
+  <g opacity="0.15">
+    <path d="M 0 30 H 540 M 0 60 H 540 M 0 90 H 540 M 0 120 H 540 M 0 150 H 540 M 0 180 H 540 M 0 210 H 540 M 0 240 H 540 M 0 270 H 540 M 0 300 H 540 M 0 330 H 540 M 0 360 H 540" stroke="#080808" stroke-width="1" fill="none" />
+    <path d="M 30 0 V 380 M 60 0 V 380 M 90 0 V 380 M 120 0 V 380 M 150 0 V 380 M 180 0 V 380 M 210 0 V 380 M 240 0 V 380 M 270 0 V 380 M 300 0 V 380 M 330 0 V 380 M 360 0 V 380 M 390 0 V 380 M 420 0 V 380 M 450 0 V 380 M 480 0 V 380 M 510 0 V 380" stroke="#080808" stroke-width="1" fill="none" />
+  </g>
+
+  <!-- Ground / Desk Line -->
+  <rect x="20" y="320" width="500" height="8" class="px-border" />
+  <rect x="24" y="328" width="492" height="4" class="px-blue" />
+  <rect x="30" y="332" width="16" height="40" class="px-border" />
+  <rect x="494" y="332" width="16" height="40" class="px-border" />
+
+  <!-- ==================== THE DEVELOPER (LEFT) ==================== -->
+  <g id="developer-character" transform="translate(60, 110)">
+    <!-- Shadow -->
+    <rect x="20" y="210" width="140" height="6" fill="#080808" opacity="0.3" />
+
+    <!-- Chair Back -->
+    <rect x="10" y="70" width="16" height="130" class="px-border" />
+    <rect x="6" y="90" width="10" height="90" class="px-dark" />
+
+    <!-- Developer Body - Dark Hoodie -->
+    <!-- Torso -->
+    <rect x="46" y="96" width="76" height="114" class="px-hoodie" />
+    <rect x="42" y="96" width="6" height="106" class="px-border" />
+    <rect x="116" y="96" width="6" height="106" class="px-border" />
+    <!-- Hoodie Pocket -->
+    <rect x="56" y="160" width="56" height="34" class="px-hoodie-hi" />
+    <rect x="54" y="160" width="4" height="34" class="px-border" />
+    <rect x="110" y="160" width="4" height="34" class="px-border" />
+    <rect x="56" y="192" width="56" height="4" class="px-border" />
+    <!-- Hoodie Strings -->
+    <rect x="68" y="104" width="4" height="36" class="px-cream" />
+    <rect x="92" y="104" width="4" height="36" class="px-cream" />
+
+    <!-- Arm / Sleeves typing on laptop -->
+    <rect x="90" y="120" width="60" height="24" class="px-hoodie" />
+    <rect x="118" y="128" width="40" height="18" class="px-hoodie-hi" />
+    <!-- Hand -->
+    <rect x="150" y="138" width="16" height="12" class="px-skin" />
+    <rect x="160" y="142" width="8" height="4" class="px-skin" />
+
+    <!-- Head & Hair -->
+    <!-- Neck -->
+    <rect x="72" y="80" width="20" height="18" class="px-skin" />
+    <!-- Face / Jaw -->
+    <rect x="60" y="24" width="56" height="62" class="px-skin" />
+    <rect x="56" y="24" width="4" height="62" class="px-border" />
+    <rect x="116" y="24" width="4" height="62" class="px-border" />
+    <!-- Dark Messy Hair -->
+    <rect x="52" y="6" width="72" height="26" class="px-hair" />
+    <rect x="48" y="14" width="16" height="30" class="px-hair" />
+    <rect x="112" y="14" width="14" height="24" class="px-hair" />
+    <rect x="56" y="0" width="40" height="12" class="px-hair" />
+    <rect x="88" y="0" width="30" height="16" class="px-hair" />
+    <!-- Forehead fringe -->
+    <rect x="64" y="24" width="12" height="12" class="px-hair" />
+    <rect x="80" y="24" width="16" height="8" class="px-hair" />
+    <rect x="100" y="24" width="12" height="14" class="px-hair" />
+
+    <!-- Eyebrows (focused, slightly skeptical expression) -->
+    <rect x="68" y="40" width="14" height="4" class="px-hair" />
+    <rect x="92" y="42" width="14" height="4" class="px-hair" />
+    <!-- Eyes -->
+    <rect x="70" y="46" width="8" height="8" class="px-border" />
+    <rect x="74" y="46" width="4" height="4" class="px-white" />
+    <rect x="94" y="48" width="8" height="8" class="px-border" />
+    <rect x="98" y="48" width="4" height="4" class="px-white" />
+    <!-- Nose -->
+    <rect x="86" y="54" width="6" height="10" class="px-border" opacity="0.4" />
+    <!-- Mouth (deadpan/concentrating) -->
+    <rect x="76" y="70" width="18" height="4" class="px-border" />
+
+    <!-- Eyeglasses (brutalist rectangular black frames) -->
+    <rect x="66" y="42" width="18" height="16" fill="none" stroke="#080808" stroke-width="3" />
+    <rect x="90" y="44" width="18" height="16" fill="none" stroke="#080808" stroke-width="3" />
+    <rect x="84" y="48" width="6" height="3" class="px-border" />
+
+    <!-- Laptop on Desk -->
+    <g transform="translate(144, 114)">
+      <!-- Base -->
+      <rect x="0" y="32" width="70" height="6" class="px-dark" />
+      <rect x="2" y="30" width="66" height="2" class="px-gray" />
+      <!-- Screen Lid Angle -->
+      <polygon points="12,0 18,0 4,32 -2,32" class="px-dark" />
+      <!-- Glowing Display -->
+      <polygon points="16,4 48,4 34,30 2,30" class="px-cyan" opacity="0.9" />
+      <!-- Code lines on screen -->
+      <rect x="18" y="8" width="18" height="2" class="px-blue" />
+      <rect x="14" y="14" width="22" height="2" class="px-blue" />
+      <rect x="10" y="20" width="16" height="2" class="px-blue" />
+    </g>
+
+    <!-- Coffee Mug [404] -->
+    <g transform="translate(30, 186)">
+      <rect x="0" y="6" width="16" height="18" class="px-cream" stroke="#080808" stroke-width="2" />
+      <rect x="16" y="10" width="5" height="10" fill="none" stroke="#080808" stroke-width="2" />
+      <rect x="4" y="10" width="8" height="2" class="px-blue" />
+      <rect x="4" y="14" width="8" height="2" class="px-blue" />
+      <!-- Steam -->
+      <rect x="4" y="0" width="2" height="4" class="px-gray" opacity="0.6" />
+      <rect x="10" y="-3" width="2" height="6" class="px-gray" opacity="0.6" />
+    </g>
+  </g>
+
+  <!-- ==================== THE AI COMPANION (RIGHT) ==================== -->
+  <g id="companion-character" transform="translate(340, 118)">
+    <!-- Floating Shadow -->
+    <rect x="24" y="202" width="72" height="6" fill="#080808" opacity="0.3" />
+
+    <!-- Antennas / Sensor Array -->
+    <rect x="56" y="8" width="6" height="22" class="px-border" />
+    <rect x="54" y="2" width="10" height="8" class="px-orange" />
+    <!-- Pulsing Signal Bit -->
+    <rect x="57" y="-6" width="4" height="4" class="px-cyan" />
+    <rect x="67" y="-12" width="3" height="3" class="px-cyan" opacity="0.7" />
+
+    <!-- Robot Head / Body (Geometric Cream Monolith) -->
+    <rect x="18" y="28" width="84" height="96" class="px-cream" />
+    <rect x="14" y="28" width="4" height="96" class="px-border" />
+    <rect x="102" y="28" width="4" height="96" class="px-border" />
+    <rect x="18" y="24" width="84" height="4" class="px-border" />
+    <rect x="18" y="124" width="84" height="4" class="px-border" />
+
+    <!-- Corner Brackets / Brutalist hardware details -->
+    <rect x="20" y="30" width="8" height="4" class="px-blue" />
+    <rect x="20" y="30" width="4" height="8" class="px-blue" />
+    <rect x="92" y="30" width="8" height="4" class="px-blue" />
+    <rect x="96" y="30" width="4" height="8" class="px-blue" />
+
+    <!-- Visor / Face Screen (Black CRT/OLED style) -->
+    <rect x="26" y="42" width="68" height="44" class="px-dark" />
+    <rect x="24" y="40" width="72" height="2" class="px-border" />
+    <rect x="24" y="86" width="72" height="2" class="px-border" />
+
+    <!-- Visor Scanline -->
+    <rect x="26" y="58" width="68" height="1" fill="#00FFCC" opacity="0.2" />
+
+    <!-- Expressive Pixel Eyes (Intelligent, Slightly Smug/Witty) -->
+    <!-- Left Eye -->
+    <rect x="36" y="54" width="16" height="14" class="px-cyan" />
+    <rect x="38" y="56" width="6" height="6" class="px-white" />
+    <rect x="36" y="52" width="16" height="3" class="px-border" /> <!-- eyebrow tilt -->
+    <!-- Right Eye -->
+    <rect x="64" y="54" width="16" height="14" class="px-cyan" />
+    <rect x="66" y="56" width="6" height="6" class="px-white" />
+    <rect x="64" y="50" width="16" height="3" class="px-border" /> <!-- raised skeptical eyebrow -->
+
+    <!-- Cute Pixel Mouth line -->
+    <rect x="52" y="74" width="14" height="3" class="px-cyan" />
+    <rect x="64" y="71" width="3" height="3" class="px-cyan" /> <!-- small sly smirk -->
+
+    <!-- CHEST: Warm-Orange Pixel Spark / Core -->
+    <rect x="46" y="96" width="26" height="18" class="px-border" />
+    <rect x="48" y="98" width="22" height="14" class="px-dark" />
+    <!-- The Spark (Geometric pixel star) -->
+    <rect x="56" y="101" width="6" height="8" class="px-orange" />
+    <rect x="53" y="103" width="12" height="4" class="px-orange" />
+    <rect x="57" y="103" width="4" height="4" class="px-yellow" />
+
+    <!-- Articulated Base / Hover Thruster -->
+    <rect x="34" y="128" width="50" height="14" class="px-dark" />
+    <rect x="42" y="142" width="34" height="8" class="px-blue" />
+    <rect x="48" y="150" width="22" height="8" class="px-cyan" opacity="0.8" />
+    <rect x="54" y="158" width="10" height="6" class="px-white" opacity="0.9" />
+
+    <!-- Cute Floating Side Wings / Stabilizers -->
+    <rect x="4" y="60" width="10" height="24" class="px-cream" stroke="#080808" stroke-width="2" />
+    <rect x="6" y="66" width="6" height="4" class="px-orange" />
+    <rect x="106" y="60" width="10" height="24" class="px-cream" stroke="#080808" stroke-width="2" />
+    <rect x="108" y="66" width="6" height="4" class="px-orange" />
+  </g>
+
+  <!-- ==================== BRUTALIST SPEECH DIALOGUES ==================== -->
+  <!-- Dialog 1: Developer (Left Top) -->
+  <g transform="translate(40, 24)">
+    <!-- Speech Box -->
+    <rect x="0" y="0" width="210" height="52" class="dialog-bg" stroke="#080808" stroke-width="2" />
+    <rect x="0" y="0" width="210" height="16" class="px-border" />
+    <text x="8" y="11" class="dialog-label" fill="#FFFFFF">DEV // @SOURCASTIC</text>
+    <text x="8" y="32" class="dialog-text">"It compiles and passes</text>
+    <text x="8" y="45" class="dialog-text">all tests on my machine."</text>
+    <!-- Box pointer arrow -->
+    <polygon points="90,52 100,52 90,62" class="px-border" />
+  </g>
+
+  <!-- Dialog 2: AI Companion (Right Top) -->
+  <g transform="translate(270, 20)">
+    <!-- Speech Box -->
+    <rect x="0" y="0" width="240" height="56" class="dialog-bg" stroke="#1717F5" stroke-width="2" />
+    <rect x="0" y="0" width="240" height="16" class="px-blue" />
+    <text x="8" y="11" class="dialog-label" fill="#FFFFFF">COMPANION.AI // v2.6</text>
+    <text x="8" y="32" class="dialog-text" fill="#1717F5">"Your machine is a statistically</text>
+    <text x="8" y="47" class="dialog-text" fill="#1717F5">unsupported anomaly."</text>
+    <!-- Box pointer arrow -->
+    <polygon points="120,56 130,56 125,66" class="px-blue" />
+  </g>
+
+  <!-- Bottom Technical Legend Tag -->
+  <g transform="translate(20, 356)">
+    <rect x="0" y="0" width="500" height="18" fill="var(--bg-primary, #F4F4F2)" stroke="#080808" stroke-width="1" />
+    <text x="10" y="12" font-family="'IBM Plex Mono', monospace" font-size="9px" font-weight="600" fill="var(--text-muted, #777777)">
+      [FIG 01 // HUMAN-AGENT CO-AUTHORED SYSTEM LIFECYCLE // LIVE DIALOGUE]
+    </text>
+  </g>
+</svg>

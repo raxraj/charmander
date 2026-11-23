@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60" width="160" height="60" shape-rendering="crispEdges">
+  <defs>
+    <style>
+      .m-border { fill: var(--border-color, #080808); }
+      .m-hoodie { fill: #202026; }
+      .m-skin { fill: #FFDCB2; }
+      .m-hair { fill: #101014; }
+      .m-cream { fill: #F4F4F0; }
+      .m-screen { fill: #181818; }
+      .m-cyan { fill: #00F0FF; }
+      .m-orange { fill: #FF6B35; }
+      .m-blue { fill: #1717F5; }
+    </style>
+  </defs>
+
+  <!-- Ground line -->
+  <rect x="0" y="52" width="160" height="3" class="m-border" />
+
+  <!-- Tiny Developer (Left) -->
+  <g transform="translate(24, 14)">
+    <!-- Body -->
+    <rect x="8" y="16" width="18" height="22" class="m-hoodie" />
+    <rect x="6" y="24" width="22" height="14" class="m-hoodie" />
+    <!-- Head -->
+    <rect x="10" y="4" width="14" height="12" class="m-skin" />
+    <!-- Hair -->
+    <rect x="8" y="0" width="18" height="6" class="m-hair" />
+    <rect x="8" y="4" width="4" height="8" class="m-hair" />
+    <!-- Eye & Glasses -->
+    <rect x="14" y="6" width="6" height="4" fill="none" stroke="#080808" stroke-width="1" />
+    <rect x="16" y="7" width="2" height="2" class="m-cyan" />
+    <!-- Laptop in lap -->
+    <rect x="22" y="22" width="14" height="2" class="m-border" />
+    <polygon points="26,14 28,14 24,22 22,22" class="m-screen" />
+    <rect x="23" y="15" width="4" height="6" class="m-cyan" opacity="0.8" />
+  </g>
+
+  <!-- Tiny AI Companion (Right) -->
+  <g transform="translate(86, 12)">
+    <!-- Antenna -->
+    <rect x="14" y="0" width="2" height="6" class="m-border" />
+    <rect x="13" y="-2" width="4" height="3" class="m-orange" />
+    <!-- Body/Head Monolith -->
+    <rect x="4" y="6" width="22" height="28" class="m-cream" stroke="#080808" stroke-width="1.5" />
+    <!-- Screen Face -->
+    <rect x="7" y="10" width="16" height="12" class="m-screen" />
+    <!-- Pixel Eyes -->
+    <rect x="9" y="13" width="4" height="4" class="m-cyan" />
+    <rect x="17" y="13" width="4" height="4" class="m-cyan" />
+    <!-- Chest Spark -->
+    <rect x="13" y="24" width="4" height="4" class="m-orange" />
+    <!-- Thruster base -->
+    <rect x="9" y="34" width="12" height="4" class="m-blue" />
+  </g>
+
+  <!-- Heart / Spark between them -->
+  <g transform="translate(64, 22)">
+    <rect x="3" y="1" width="3" height="3" class="m-blue" />
+    <rect x="7" y="1" width="3" height="3" class="m-blue" />
+    <rect x="1" y="4" width="11" height="4" class="m-blue" />
+    <rect x="3" y="8" width="7" height="3" class="m-blue" />
+    <rect x="5" y="11" width="3" height="2" class="m-blue" />
+  </g>
+</svg>

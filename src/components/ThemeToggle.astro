@@ -1,0 +1,72 @@
+---
+// ThemeToggle.astro - Brutalist Blue Square Switcher matching reference
+---
+<button id="theme-toggle" class="theme-toggle-square" aria-label="Toggle visual theme" type="button" title="Toggle Light/Dark Theme">
+  <span class="sr-only">Toggle theme</span>
+  <!-- Sun Icon for Dark Mode -->
+  <svg class="theme-icon sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="square">
+    <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
+    <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"></path>
+  </svg>
+  <!-- Moon Icon for Light Mode -->
+  <svg class="theme-icon moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+
+<style>
+  .theme-toggle-square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    background-color: var(--accent-blue);
+    color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle-square:hover {
+    background-color: var(--accent-blue-hover);
+  }
+
+  .sun-icon {
+    display: none;
+  }
+
+  .moon-icon {
+    display: block;
+  }
+
+  :root[data-theme="dark"] .sun-icon {
+    display: block;
+  }
+
+  :root[data-theme="dark"] .moon-icon {
+    display: none;
+  }
+</style>
+
+<script>
+  function initThemeToggle() {
+    const toggleBtn = document.getElementById("theme-toggle");
+
+    toggleBtn?.addEventListener("click", () => {
+      const activeTheme = document.documentElement.getAttribute("data-theme") || "light";
+      const newTheme = activeTheme === "dark" ? "light" : "dark";
+
+      document.documentElement.setAttribute("data-theme", newTheme);
+      try {
+        localStorage.setItem("sourcastic_theme", newTheme);
+      } catch (e) {
+        console.warn("Could not save theme preference to localStorage", e);
+      }
+    });
+  }
+
+  initThemeToggle();
+  document.addEventListener("astro:after-swap", initThemeToggle);
+</script>

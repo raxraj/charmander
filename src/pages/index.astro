@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navigation from "../components/Navigation.astro";
+import BrandHeader from "../components/BrandHeader.astro";
+import Hero from "../components/Hero.astro";
+import FeaturedArticle from "../components/FeaturedArticle.astro";
+import RecentWriting from "../components/RecentWriting.astro";
+import Footer from "../components/Footer.astro";
+
+import {
+  siteMetaFixture,
+  featuredArticleFixture,
+  recentArticlesFixture,
+  currentlyObsessedFixture
+} from "../data/fixtures";
+---
+
+<BaseLayout
+  title="SOURCASTIC. / DEV BLOGS — Thoughts, experiments & occasional bad decisions"
+  description={siteMetaFixture.description}
+>
+  <main class="homepage-frame">
+    <!-- 1. Top Compact Navigation Bar -->
+    <Navigation navItems={siteMetaFixture.navigation} />
+
+    <!-- 2. Brand Masthead / Wordmark -->
+    <BrandHeader meta={siteMetaFixture} />
+
+    <!-- 3. Hero Section (50/50 Split Grid) -->
+    <Hero />
+
+    <!-- 4. Featured Article (Left) + Recent Writing (Right) Grid -->
+    <section class="editorial-middle-grid" aria-label="Featured and Recent Articles">
+      <div class="middle-featured-col">
+        <FeaturedArticle article={featuredArticleFixture} />
+      </div>
+      <div class="middle-recent-col">
+        <RecentWriting articles={recentArticlesFixture} />
+      </div>
+    </section>
+
+    <!-- 5. Bottom Section: Obsessions + Mascot Scene + Publication Footer -->
+    <Footer
+      obsessedItems={currentlyObsessedFixture}
+      meta={siteMetaFixture}
+    />
+  </main>
+</BaseLayout>
+
+<style>
+  .homepage-frame {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    width: 100%;
+  }
+
+  /* Middle Split Grid */
+  .editorial-middle-grid {
+    display: grid;
+    grid-template-columns: 1.14fr 1fr;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+  }
+
+  .middle-featured-col {
+    border-right: 1px solid var(--border-color);
+  }
+
+  @media (max-width: 900px) {
+    .editorial-middle-grid {
+      grid-template-columns: 1fr;
+    }
+    .middle-featured-col {
+      border-right: none;
+      border-bottom: 1px solid var(--border-color);
+    }
+  }
+</style>

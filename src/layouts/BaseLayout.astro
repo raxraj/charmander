@@ -1,0 +1,73 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Sourcastic Dev Blogs — Pixel Brutalism Technical Publication",
+  description = "A developer's perspective on a chaotic, beautiful tech world. Thoughts, experiments & occasional bad decisions."
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Google Fonts: Space Grotesk (Display), IBM Plex Mono (Metadata), Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Theme initialization script (runs synchronously to prevent FOUC) -->
+    <script is:inline>
+      (function() {
+        try {
+          const stored = localStorage.getItem("sourcastic_theme");
+          if (stored === "dark" || stored === "light") {
+            document.documentElement.setAttribute("data-theme", stored);
+          } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            document.documentElement.setAttribute("data-theme", "dark");
+          } else {
+            document.documentElement.setAttribute("data-theme", "light");
+          }
+        } catch (e) {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="page-viewport-wrapper">
+      <div class="editorial-container">
+        <slot />
+      </div>
+    </div>
+  </body>
+</html>
+
+<style>
+  .page-viewport-wrapper {
+    min-height: 100vh;
+    padding: 1.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-primary);
+  }
+
+  @media (max-width: 600px) {
+    .page-viewport-wrapper {
+      padding: 0;
+    }
+  }
+</style>

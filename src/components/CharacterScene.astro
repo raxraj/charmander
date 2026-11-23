@@ -1,0 +1,46 @@
+---
+// CharacterScene.astro - Hero Pixel Art Scene
+// Isolates character illustration usage so definitive artwork can later
+// replace provisional assets without restructuring the homepage.
+
+interface Props {
+  className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<div class={`character-scene-wrapper ${className}`}>
+  <img
+    src="/assets/illustrations/hero-character-scene.png"
+    alt="Pixel art scene showing The Developer at his laptop and the AI Companion conversing"
+    class="hero-illustration pixel-canvas"
+    width="636"
+    height="448"
+    loading="eager"
+  />
+</div>
+
+<style>
+  .character-scene-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-primary);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-illustration {
+    width: 100%;
+    height: 100%;
+    max-height: 440px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+  }
+</style>

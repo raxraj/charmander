@@ -1,0 +1,204 @@
+---
+import type { Article } from "../data/types";
+
+interface Props {
+  articles: Article[];
+}
+
+const { articles } = Astro.props;
+---
+
+<section class="recent-writing-wrapper" id="writing" aria-label="Recent Articles">
+  <!-- Top Header Bar -->
+  <div class="recent-header-bar">
+    <div class="recent-badge">
+      RECENT WRITING
+    </div>
+    <a href="#all-writing" class="view-all-link">
+      VIEW ALL →
+    </a>
+  </div>
+
+  <!-- Rows List -->
+  <div class="articles-list">
+    {articles.map((art, idx) => (
+      <article class="article-row">
+        <!-- Number index -->
+        <span class="row-index">{art.index}</span>
+
+        <!-- Center Content -->
+        <div class="row-content">
+          <h4 class="row-title">
+            <a href={`#article-${art.slug}`} class="title-anchor">
+              {art.title}
+            </a>
+          </h4>
+          <div class="row-meta">
+            <span class="meta-category">{art.category}</span>
+            <span class="meta-dot">•</span>
+            <span class="meta-time">{art.readingTime}</span>
+          </div>
+        </div>
+
+        <!-- Right Pixel Art Icon -->
+        <div class="row-icon-cell">
+          {art.coverImage ? (
+            <img
+              src={art.coverImage.src}
+              alt={art.coverImage.alt}
+              class="row-pixel-icon pixel-canvas"
+              width="44"
+              height="44"
+              loading="lazy"
+            />
+          ) : (
+            <div class="default-row-box"></div>
+          )}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .recent-writing-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color: var(--bg-primary);
+  }
+
+  .recent-header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.65rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+  }
+
+  .recent-badge {
+    background-color: var(--color-black);
+    color: #FFFFFF;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 800;
+    padding: 0.25rem 0.65rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  :root[data-theme="dark"] .recent-badge {
+    background-color: var(--color-offwhite);
+    color: var(--color-black);
+  }
+
+  .view-all-link {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    transition: color 0.1s ease;
+  }
+
+  .view-all-link:hover {
+    color: var(--accent-blue);
+  }
+
+  .articles-list {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .article-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 64px;
+    align-items: center;
+    padding: 1.35rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.1s ease;
+    gap: 1rem;
+    flex-grow: 1;
+  }
+
+  .article-row:last-child {
+    border-bottom: none;
+  }
+
+  .article-row:hover {
+    background-color: var(--bg-secondary);
+  }
+
+  .row-index {
+    font-family: var(--font-mono);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .row-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .row-title {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    margin: 0;
+  }
+
+  .title-anchor {
+    color: var(--text-primary);
+    transition: color 0.1s ease;
+  }
+
+  .article-row:hover .title-anchor {
+    color: var(--accent-blue);
+  }
+
+  .row-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .meta-dot {
+    color: var(--text-muted);
+  }
+
+  .row-icon-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .row-pixel-icon {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+    image-rendering: pixelated;
+  }
+
+  @media (max-width: 600px) {
+    .article-row {
+      grid-template-columns: 36px 1fr;
+      padding: 1.15rem 1rem;
+    }
+    .row-icon-cell {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,120 @@
+/* ==========================================================================
+   SOURCASTIC DEV BLOGS - DESIGN TOKENS
+   Visual Identity: Pixel Brutalism
+   ========================================================================== */
+
+:root {
+  /* Constant Base Colors */
+  --color-black: #080808;
+  --color-offwhite: #F4F4F2;
+  --color-electric-blue: #1717F5;
+  --color-electric-blue-dark: #3238FF;
+  --color-neutral-grey: #777777;
+  --color-mascot-orange: #FF6B35;
+  --color-mascot-yellow: #FFD000;
+  --color-terminal-green: #00E676;
+  --color-terminal-cyan: #00F0FF;
+
+  /* Typography Stacks */
+  --font-display: "Space Grotesk", "Archivo Black", Impact, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", "JetBrains Mono", Consolas, "Courier New", monospace;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Typographic Scales */
+  --text-xs: 0.75rem;     /* 12px */
+  --text-sm: 0.875rem;    /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;    /* 18px */
+  --text-xl: 1.25rem;     /* 20px */
+  --text-2xl: 1.5rem;     /* 24px */
+  --text-3xl: 2rem;       /* 32px */
+  --text-4xl: 2.5rem;     /* 40px */
+  --text-5xl: 3.5rem;     /* 56px */
+  --text-6xl: 4.5rem;     /* 72px */
+  --text-7xl: 6rem;       /* 96px */
+
+  /* Spacing */
+  --space-1: 0.25rem;     /* 4px */
+  --space-2: 0.5rem;      /* 8px */
+  --space-3: 0.75rem;     /* 12px */
+  --space-4: 1rem;        /* 16px */
+  --space-6: 1.5rem;      /* 24px */
+  --space-8: 2rem;        /* 32px */
+  --space-10: 2.5rem;     /* 40px */
+  --space-12: 3rem;       /* 48px */
+  --space-16: 4rem;       /* 64px */
+  --space-20: 5rem;       /* 80px */
+
+  /* Layout */
+  --max-width: 1320px;
+  --border-width: 1px;
+}
+
+/* ==========================================================================
+   THEME: LIGHT (DEFAULT)
+   ========================================================================== */
+:root,
+:root[data-theme="light"] {
+  --bg-primary: #F4F4F2;
+  --bg-secondary: #EBEBE6;
+  --bg-tertiary: #E0E0DB;
+  --bg-inverted: #080808;
+
+  --text-primary: #080808;
+  --text-secondary: #444444;
+  --text-muted: #777777;
+  --text-inverted: #F4F4F2;
+
+  --border-color: #080808;
+  --border-subtle: #D5D5D0;
+  --border-contrast: #080808;
+
+  --accent-blue: #1717F5;
+  --accent-blue-hover: #0F0FC2;
+  --accent-orange: #FF6B35;
+
+  --badge-bg: #1717F5;
+  --badge-text: #FFFFFF;
+
+  --tag-bg: #E3E3DE;
+  --tag-text: #080808;
+
+  --selection-bg: #1717F5;
+  --selection-text: #FFFFFF;
+
+  --grid-line: rgba(8, 8, 8, 0.12);
+}
+
+/* ==========================================================================
+   THEME: DARK
+   ========================================================================== */
+:root[data-theme="dark"] {
+  --bg-primary: #080808;
+  --bg-secondary: #121212;
+  --bg-tertiary: #1A1A1A;
+  --bg-inverted: #F4F4F2;
+
+  --text-primary: #F4F4F2;
+  --text-secondary: #BBBBBB;
+  --text-muted: #888888;
+  --text-inverted: #080808;
+
+  --border-color: #333333;
+  --border-subtle: #242424;
+  --border-contrast: #F4F4F2;
+
+  --accent-blue: #3E4BFF;
+  --accent-blue-hover: #5D68FF;
+  --accent-orange: #FF7A3D;
+
+  --badge-bg: #3E4BFF;
+  --badge-text: #FFFFFF;
+
+  --tag-bg: #1E1E1E;
+  --tag-text: #F4F4F2;
+
+  --selection-bg: #3E4BFF;
+  --selection-text: #FFFFFF;
+
+  --grid-line: rgba(244, 244, 242, 0.08);
+}
