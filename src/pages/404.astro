@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { siteMetaFixture, currentlyObsessedFixture } from '../data/fixtures';
+---
+
+<BaseLayout
+  title="404 / TRANSMISSION LOST — SOURCASTIC. / DEV BLOGS"
+  description="The requested dispatch could not be found."
+  ogType="website"
+>
+  <main class="homepage-frame not-found-frame">
+    <Navigation navItems={siteMetaFixture.navigation} />
+
+    <section class="not-found" aria-labelledby="not-found-title">
+      <span class="error-code">ERROR // 404</span>
+      <h1 id="not-found-title">TRANSMISSION<br />NOT FOUND</h1>
+      <p>This dispatch does not exist, was unpublished, or moved to another frequency.</p>
+      <a href="/">← RETURN TO HOMEPAGE</a>
+    </section>
+
+    <Footer obsessedItems={currentlyObsessedFixture} meta={siteMetaFixture} />
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding: 4rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .error-code {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #fff;
+    background-color: var(--accent-blue);
+    padding: 0.3rem 0.55rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 7vw, 5rem);
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin: 0 0 1.25rem;
+  }
+
+  p {
+    font-family: var(--font-sans);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin: 0 0 2rem;
+  }
+
+  a {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent-blue);
+  }
+
+  a:hover {
+    color: var(--text-primary);
+  }
+</style>

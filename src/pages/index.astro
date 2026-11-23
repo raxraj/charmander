@@ -9,10 +9,13 @@ import Footer from "../components/Footer.astro";
 
 import {
   siteMetaFixture,
-  featuredArticleFixture,
-  recentArticlesFixture,
   currentlyObsessedFixture
 } from "../data/fixtures";
+
+import { getHomepageArticles } from "../lib/strapi";
+
+// Fetch published articles from Strapi during Astro SSG build
+const { featuredArticle, recentArticles, error } = await getHomepageArticles();
 ---
 
 <BaseLayout
@@ -29,13 +32,21 @@ import {
     <!-- 3. Hero Section (50/50 Split Grid) -->
     <Hero />
 
+    <!-- CMS Diagnostic Notification (renders only when Strapi is unreachable or encounters errors) -->
+    {error && (
+      <aside class="cms-diagnostic-banner" role="alert">
+        <span class="diagnostic-badge">CMS DIAGNOSTIC // {error.kind.toUpperCase()}</span>
+        <p class="diagnostic-message">{error.message}</p>
+      </aside>
+    )}
+
     <!-- 4. Featured Article (Left) + Recent Writing (Right) Grid -->
     <section class="editorial-middle-grid" aria-label="Featured and Recent Articles">
       <div class="middle-featured-col">
-        <FeaturedArticle article={featuredArticleFixture} />
+        <FeaturedArticle article={featuredArticle} />
       </div>
       <div class="middle-recent-col">
-        <RecentWriting articles={recentArticlesFixture} />
+        <RecentWriting articles={recentArticles} />
       </div>
     </section>
 
@@ -54,6 +65,34 @@ import {
     border: 1px solid var(--border-color);
     background-color: var(--bg-primary);
     width: 100%;
+  }
+
+  /* Diagnostic Banner */
+  .cms-diagnostic-banner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1.5rem;
+    background-color: var(--color-black);
+    color: var(--color-offwhite);
+    border-bottom: 2px solid var(--accent-blue);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  .diagnostic-badge {
+    background-color: #d90429;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .diagnostic-message {
+    margin: 0;
+    line-height: 1.4;
+    color: var(--color-offwhite);
   }
 
   /* Middle Split Grid */

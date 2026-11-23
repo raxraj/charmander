@@ -1,0 +1,113 @@
+---
+import type { RelatedArticle } from '../../lib/article/related';
+import { getArticleHref } from '../../lib/article/links';
+
+interface Props {
+  articles: RelatedArticle[];
+}
+
+const { articles } = Astro.props;
+---
+
+{
+  articles.length > 0 && (
+    <section class="related-section" aria-label="Related articles">
+      <h2 class="section-label">RELATED ARTICLES</h2>
+      <ul class="related-list">
+        {articles.map((item, index) => (
+          <li class="related-item">
+            <span class="related-index">{String(index + 1).padStart(2, '0')}</span>
+            <div class="related-body">
+              <a href={getArticleHref(item.slug)} class="related-title">{item.title}</a>
+              <span class="related-meta">
+                {item.category && <span>{item.category}</span>}
+                {item.category && <span class="dot">•</span>}
+                <span>{item.publishedAt}</span>
+              </span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .related-section {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    padding: 0.85rem;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-offwhite);
+    background-color: var(--color-black);
+    padding: 0.3rem 0.45rem;
+    margin: 0 0 0.35rem;
+  }
+
+  :global([data-theme='dark']) .section-label {
+    color: var(--color-black);
+    background-color: var(--color-offwhite);
+  }
+
+  .related-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .related-item {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .related-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .related-index {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .related-title {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text-primary);
+  }
+
+  .related-title:hover {
+    color: var(--accent-blue);
+  }
+
+  .related-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .dot {
+    color: var(--text-muted);
+  }
+</style>

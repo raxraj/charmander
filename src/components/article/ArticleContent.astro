@@ -1,0 +1,46 @@
+---
+import '../../styles/article.css';
+
+import type { ArticleBlock } from '../../data/types';
+import RichTextBlock from './blocks/RichTextBlock.astro';
+import CodeBlock from './blocks/CodeBlock.astro';
+import CalloutBlock from './blocks/CalloutBlock.astro';
+import ImageBlock from './blocks/ImageBlock.astro';
+import QuoteBlock from './blocks/QuoteBlock.astro';
+import TableBlock from './blocks/TableBlock.astro';
+import VideoBlock from './blocks/VideoBlock.astro';
+import TerminalBlock from './blocks/TerminalBlock.astro';
+import MermaidBlock from './blocks/MermaidBlock.astro';
+import InteractiveDemoBlock from './blocks/InteractiveDemoBlock.astro';
+import UnsupportedBlock from './blocks/UnsupportedBlock.astro';
+
+interface Props {
+  blocks: ArticleBlock[];
+}
+
+const { blocks } = Astro.props;
+
+/** Explicit registry: one renderer per normalized block type. */
+const registry = {
+  'rich-text': RichTextBlock,
+  code: CodeBlock,
+  callout: CalloutBlock,
+  image: ImageBlock,
+  quote: QuoteBlock,
+  table: TableBlock,
+  video: VideoBlock,
+  terminal: TerminalBlock,
+  mermaid: MermaidBlock,
+  demo: InteractiveDemoBlock,
+  unsupported: UnsupportedBlock,
+};
+---
+
+<div class="article-content">
+  {
+    blocks.map((block) => {
+      const Component = registry[block.type] ?? UnsupportedBlock;
+      return <Component block={block} />;
+    })
+  }
+</div>

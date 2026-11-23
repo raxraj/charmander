@@ -1,0 +1,169 @@
+---
+import type { TocHeading } from '../../lib/article/headings';
+
+interface Props {
+  headings: TocHeading[];
+}
+
+const { headings } = Astro.props;
+---
+
+{
+  headings.length > 0 && (
+    <details class="toc-disclosure" id="toc-disclosure" open>
+      <summary class="toc-summary">ON THIS PAGE <span aria-hidden="true">▾</span></summary>
+
+      <nav class="toc-nav" data-toc aria-label="On this page">
+        <ul class="toc-list">
+          {headings.map((heading) => (
+            <li class:list={['toc-item', heading.level === 3 && 'toc-item-nested']}>
+              <a class="toc-link" href={`#${heading.id}`}>
+                <span class="toc-marker" aria-hidden="true" />
+                <span>{heading.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+  )
+}
+
+<script>
+  (() => {
+    const disclosure = document.getElementById('toc-disclosure') as HTMLDetailsElement | null;
+    if (disclosure) {
+      const applyViewport = () => {
+        disclosure.open = window.innerWidth >= 900;
+      };
+      applyViewport();
+      window.addEventListener('resize', applyViewport, { passive: true });
+    }
+
+    const nav = document.querySelector<HTMLElement>('[data-toc]');
+    if (!nav) return;
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'));
+    const targets = links
+      .map((link) => document.getElementById(link.hash.slice(1)))
+      .filter((element): element is HTMLElement => element !== null);
+
+    const setActive = (id: string) => {
+      for (const link of links) {
+        const active = link.hash === `#${id}`;
+        link.classList.toggle('is-active', active);
+        if (active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      }
+    };
+
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const probe = window.scrollY + 140;
+      let current = targets[0]?.id;
+      for (const target of targets) {
+        if (target.getBoundingClientRect().top + window.scrollY <= probe) current = target.id;
+        else break;
+      }
+      if (current) setActive(current);
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!queued) {
+        queued = true;
+        requestAnimationFrame(update);
+      }
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  })();
+</script>
+
+<style>
+  .toc-disclosure {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+  }
+
+  .toc-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.6rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-offwhite);
+    background-color: var(--color-black);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .toc-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .toc-summary span {
+    color: var(--accent-blue);
+  }
+
+  .toc-nav {
+    padding: 0.6rem 0.4rem;
+  }
+
+  .toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .toc-item-nested {
+    padding-left: 0.9rem;
+  }
+
+  .toc-link {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.3rem 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+    border-left: 2px solid transparent;
+  }
+
+  .toc-link:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+  }
+
+  .toc-marker {
+    flex: 0 0 5px;
+    width: 5px;
+    height: 5px;
+    background-color: var(--text-muted);
+  }
+
+  .toc-link.is-active {
+    color: var(--text-primary);
+    font-weight: 700;
+    border-left-color: var(--accent-blue);
+    background-color: var(--bg-secondary);
+  }
+
+  .toc-link.is-active .toc-marker {
+    background-color: var(--accent-blue);
+  }
+
+  @media (min-width: 900px) {
+    .toc-summary {
+      cursor: default;
+    }
+    .toc-summary span {
+      display: none;
+    }
+  }
+</style>

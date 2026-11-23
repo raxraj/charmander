@@ -1,0 +1,135 @@
+---
+interface Props {
+  title: string;
+  url: string;
+}
+
+const { title, url } = Astro.props;
+---
+
+<section class="share-section" aria-label="Share this article">
+  <h2 class="section-label">SHARE</h2>
+
+  <div class="share-actions">
+    <button type="button" class="share-button" data-copy-link aria-label="Copy article link">
+      COPY LINK
+    </button>
+    <button type="button" class="share-button native-share" data-native-share aria-label="Share article" hidden>
+      SHARE
+    </button>
+  </div>
+
+  <p class="share-status" data-share-status role="status" aria-live="polite"></p>
+</section>
+
+<script define:vars={{ shareTitle: title, shareUrl: url }}>
+  // Plain JavaScript only: define:vars scripts are emitted inline without TS transpilation.
+  (() => {
+    const copyButton = document.querySelector('[data-copy-link]');
+    const shareButton = document.querySelector('[data-native-share]');
+    const status = document.querySelector('[data-share-status]');
+    if (!copyButton || !status) return;
+
+    const announce = (message) => {
+      status.textContent = message;
+      window.setTimeout(() => {
+        status.textContent = '';
+      }, 2500);
+    };
+
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        announce('Link copied to clipboard.');
+      } catch {
+        // Fallback for insecure contexts / denied clipboard permission.
+        const input = document.createElement('textarea');
+        input.value = shareUrl;
+        input.setAttribute('readonly', '');
+        document.body.appendChild(input);
+        input.select();
+        try {
+          const copied = document.execCommand('copy');
+          announce(copied ? 'Link copied to clipboard.' : 'Copy unavailable — select the address bar.');
+        } catch {
+          announce('Copy unavailable — select the address bar.');
+        }
+        input.remove();
+      }
+    });
+
+    if (shareButton && typeof navigator.share === 'function') {
+      shareButton.hidden = false;
+      shareButton.addEventListener('click', async () => {
+        try {
+          await navigator.share({ title: shareTitle, url: shareUrl });
+        } catch (error) {
+          if (error instanceof Error && error.name !== 'AbortError') {
+            announce('Share unavailable on this device.');
+          }
+        }
+      });
+    }
+  })();
+</script>
+
+<style>
+  .share-section {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    padding: 0.85rem;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--color-offwhite);
+    background-color: var(--color-black);
+    padding: 0.3rem 0.45rem;
+    margin: 0 0 0.75rem;
+  }
+
+  :global([data-theme='dark']) .section-label {
+    color: var(--color-black);
+    background-color: var(--color-offwhite);
+  }
+
+  .share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .share-button {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.4rem 0.6rem;
+    cursor: pointer;
+  }
+
+  .share-button:hover,
+  .share-button:focus-visible {
+    color: #fff;
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
+  }
+
+  .share-button[hidden] {
+    display: none;
+  }
+
+  .share-status {
+    min-height: 1.1em;
+    margin: 0.5rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--accent-blue);
+  }
+</style>

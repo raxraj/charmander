@@ -1,0 +1,71 @@
+---
+import ArticleTableOfContents from './ArticleTableOfContents.astro';
+import ArticleReadingProgress from './ArticleReadingProgress.astro';
+import type { TocHeading } from '../../lib/article/headings';
+
+interface Props {
+  headings: TocHeading[];
+  readingTime: string;
+  wordCount: number;
+}
+
+const { headings, readingTime, wordCount } = Astro.props;
+---
+
+<div class="sidebar-left-inner">
+  <ArticleTableOfContents headings={headings} />
+
+  <ArticleReadingProgress />
+
+  <section class="reading-stats" aria-label="Reading statistics">
+    <div class="stat-row">
+      <span class="stat-label">LENGTH</span>
+      <span class="stat-value">{readingTime}</span>
+    </div>
+    <div class="stat-row">
+      <span class="stat-label">WORDS</span>
+      <span class="stat-value">{wordCount.toLocaleString('en-US')}</span>
+    </div>
+  </section>
+</div>
+
+<style>
+  .sidebar-left-inner {
+    width: 100%;
+  }
+
+  .reading-stats {
+    margin-top: 1rem;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    padding: 0.25rem 0.75rem;
+  }
+
+  .stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+  }
+
+  .stat-row + .stat-row {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+  }
+
+  .stat-value {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+  }
+</style>

@@ -4,11 +4,23 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  canonical?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  publishedTime?: string;
 }
 
 const {
   title = "Sourcastic Dev Blogs — Pixel Brutalism Technical Publication",
-  description = "A developer's perspective on a chaotic, beautiful tech world. Thoughts, experiments & occasional bad decisions."
+  description = "A developer's perspective on a chaotic, beautiful tech world. Thoughts, experiments & occasional bad decisions.",
+  canonical,
+  ogTitle,
+  ogDescription,
+  ogImage,
+  ogType = 'website',
+  publishedTime,
 } = Astro.props;
 ---
 
@@ -20,6 +32,17 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index,follow" />
+
+    {/* SEO / Open Graph — all values come from CMS fields or safe fallbacks. */}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={ogTitle || title} />
+    <meta property="og:description" content={ogDescription || description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
 
     <!-- Google Fonts: Space Grotesk (Display), IBM Plex Mono (Metadata), Inter (Body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

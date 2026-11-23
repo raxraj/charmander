@@ -1,0 +1,17 @@
+---
+import type { RichTextBlock as RichTextBlockType } from '../../../data/types';
+import { renderMarkdown } from '../../../lib/article/markdown';
+
+interface Props {
+  block: RichTextBlockType;
+}
+
+const { block } = Astro.props;
+// Prefer the single build-time render prepared by prepareArticleForReading so
+// heading IDs match the table of contents exactly.
+const html = block.html ?? renderMarkdown(block.markdown);
+---
+
+<div class="article-block">
+  <div class="article-prose" set:html={html}></div>
+</div>

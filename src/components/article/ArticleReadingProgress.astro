@@ -1,0 +1,102 @@
+---
+// Lightweight progress indicator scoped to the article reading area.
+---
+
+<section class="reading-progress" aria-label="Reading progress">
+  <div class="progress-head">
+    <span>READING PROGRESS</span>
+    <span class="progress-value" data-progress-value>0%</span>
+  </div>
+  <div
+    class="progress-track"
+    role="progressbar"
+    aria-label="Reading progress"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    aria-valuenow="0"
+    data-progress-track
+  >
+    <span class="progress-fill" data-progress-fill></span>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const article = document.querySelector<HTMLElement>('.article-reading-area');
+    const fill = document.querySelector<HTMLElement>('[data-progress-fill]');
+    const value = document.querySelector<HTMLElement>('[data-progress-value]');
+    const track = document.querySelector<HTMLElement>('[data-progress-track]');
+    if (!article || !fill || !value || !track) return;
+
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const top = article.getBoundingClientRect().top + window.scrollY;
+      const total = Math.max(1, article.offsetHeight - window.innerHeight);
+      const raw = (window.scrollY - top) / total;
+      const percent = Math.round(Math.min(1, Math.max(0, raw)) * 100);
+      fill.style.width = `${percent}%`;
+      value.textContent = `${percent}%`;
+      track.setAttribute('aria-valuenow', String(percent));
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!queued) {
+        queued = true;
+        requestAnimationFrame(update);
+      }
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    update();
+  })();
+</script>
+
+<style>
+  .reading-progress {
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-primary);
+    padding: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .progress-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .progress-value {
+    min-width: 3ch;
+    text-align: right;
+    color: var(--accent-blue);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .progress-track {
+    height: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    display: block;
+    width: 0;
+    height: 100%;
+    background-color: var(--accent-blue);
+    transition: width 0.1s linear;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .progress-fill {
+      transition: none;
+    }
+  }
+</style>

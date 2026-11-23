@@ -1,0 +1,16 @@
+---
+import type { TableBlockData } from '../../../data/types';
+import { renderMarkdown } from '../../../lib/article/markdown';
+
+interface Props {
+  block: TableBlockData;
+}
+
+const { block } = Astro.props;
+// Sanitized Markdown table; the scroll wrapper lives in the global article CSS.
+const html = renderMarkdown(block.markdown);
+---
+
+<div class="article-block">
+  <div class="table-scroll" set:html={html}></div>
+</div>

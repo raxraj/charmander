@@ -1,8 +1,9 @@
 ---
 import type { Article } from "../data/types";
+import { getArticleHref } from "../lib/article/links";
 
 interface Props {
-  article: Article;
+  article: Article | null;
 }
 
 const { article } = Astro.props;
@@ -12,37 +13,62 @@ const { article } = Astro.props;
   <!-- Top Editorial Header Bar -->
   <div class="featured-header-bar">
     <div class="featured-badge">
-      FEATURED ARTICLE / {article.index}
+      FEATURED ARTICLE {article?.category ? `// ${article.category}` : (article?.index ? `/ ${article.index}` : '')}
     </div>
-    <time class="featured-date" datetime="2026-11-23">
-      {article.publishedAt}
-    </time>
+    {article ? (
+      <time class="featured-date" datetime={article.publishedAtRaw}>
+        {article.publishedAt}
+      </time>
+    ) : (
+      <span class="featured-date">[ TRANSMISSION STANDBY ]</span>
+    )}
   </div>
 
   <!-- Content Split: Text & Cover Illustration -->
   <div class="featured-body-grid">
     <div class="featured-text-col">
-      <h3 class="featured-title">
-        <span>THE GREAT</span>
-        <span>AI BILL</span>
-        <span>MYSTERY</span>
-      </h3>
+      {article ? (
+        <h3 class="featured-title">
+          {article.title.includes('\n') ? (
+            article.title.split('\n').map((line) => <span>{line}</span>)
+          ) : (
+            <span>{article.title}</span>
+          )}
+        </h3>
+      ) : (
+        <h3 class="featured-title">
+          <span>NO PUBLISHED</span>
+          <span>ARTICLES YET</span>
+        </h3>
+      )}
 
-      <p class="featured-excerpt">
-        {article.excerpt}
-      </p>
+      {article ? (
+        article.excerpt && (
+          <p class="featured-excerpt">
+            {article.excerpt}
+          </p>
+        )
+      ) : (
+        <p class="featured-excerpt">
+          Nothing has been published to the archive yet. Check back soon for technical investigations, architecture teardowns, and experiments.
+        </p>
+      )}
 
       <div class="featured-meta-row">
-        <a href={`#article-${article.slug}`} class="read-link">
-          {article.readingTime} →
-        </a>
+        {article ? (
+          <a href={getArticleHref(article.slug)} class="read-link">
+            {article.readingTime ? `${article.readingTime} →` : 'READ DISPATCH →'}
+          </a>
+        ) : (
+          <span class="empty-status-tag">[ ARCHIVE STANDBY ]</span>
+        )}
       </div>
     </div>
 
     <div class="featured-illustration-col">
       <img
-        src={article.coverImage?.src || "/assets/illustrations/featured-bill-mystery.png"}
-        alt={article.coverImage?.alt || "Pixel art receipt analysis"}
+        src={article?.coverImage?.src || "/assets/illustrations/featured-bill-mystery.png"}
+        alt={article?.coverImage?.alt || (article ? article.title : "Pixel art developer waiting at workstation")}
         class="receipt-illustration pixel-canvas"
         width="236"
         height="374"
@@ -139,6 +165,14 @@ const { article } = Astro.props;
 
   .read-link:hover {
     color: var(--accent-blue);
+  }
+
+  .empty-status-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
   }
 
   .featured-illustration-col {

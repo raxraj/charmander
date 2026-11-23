@@ -1,11 +1,13 @@
 ---
 import type { Article } from "../data/types";
+import { getArticleHref } from "../lib/article/links";
 
 interface Props {
   articles: Article[];
 }
 
 const { articles } = Astro.props;
+const hasArticles = articles && articles.length > 0;
 ---
 
 <section class="recent-writing-wrapper" id="writing" aria-label="Recent Articles">
@@ -14,50 +16,61 @@ const { articles } = Astro.props;
     <div class="recent-badge">
       RECENT WRITING
     </div>
-    <a href="#all-writing" class="view-all-link">
-      VIEW ALL →
-    </a>
+    {hasArticles ? (
+      <a href="#all-writing" class="view-all-link">
+        VIEW ALL →
+      </a>
+    ) : (
+      <span class="recent-status-tag">[ ARCHIVE STANDBY ]</span>
+    )}
   </div>
 
-  <!-- Rows List -->
-  <div class="articles-list">
-    {articles.map((art, idx) => (
-      <article class="article-row">
-        <!-- Number index -->
-        <span class="row-index">{art.index}</span>
+  <!-- Rows List or Designed Empty State -->
+  {hasArticles ? (
+    <div class="articles-list">
+      {articles.map((art) => (
+        <article class="article-row">
+          <!-- Number index -->
+          <span class="row-index">{art.index}</span>
 
-        <!-- Center Content -->
-        <div class="row-content">
-          <h4 class="row-title">
-            <a href={`#article-${art.slug}`} class="title-anchor">
-              {art.title}
-            </a>
-          </h4>
-          <div class="row-meta">
-            <span class="meta-category">{art.category}</span>
-            <span class="meta-dot">•</span>
-            <span class="meta-time">{art.readingTime}</span>
+          <!-- Center Content -->
+          <div class="row-content">
+            <h4 class="row-title">
+              <a href={getArticleHref(art.slug)} class="title-anchor">
+                {art.title}
+              </a>
+            </h4>
+            <div class="row-meta">
+              {art.category && <span class="meta-category">{art.category}</span>}
+              {art.category && art.publishedAt && <span class="meta-dot">•</span>}
+              {art.publishedAt && <span class="meta-date">{art.publishedAt}</span>}
+              {art.readingTime && <span class="meta-dot">•</span>}
+              {art.readingTime && <span class="meta-time">{art.readingTime}</span>}
+            </div>
           </div>
-        </div>
 
-        <!-- Right Pixel Art Icon -->
-        <div class="row-icon-cell">
-          {art.coverImage ? (
+          <!-- Right Pixel Art Icon (local Sourcastic fallback when CMS has no cover) -->
+          <div class="row-icon-cell">
             <img
-              src={art.coverImage.src}
-              alt={art.coverImage.alt}
+              src={art.coverImage?.src || "/assets/illustrations/icon-laptop.svg"}
+              alt={art.coverImage?.alt || art.title}
               class="row-pixel-icon pixel-canvas"
               width="44"
               height="44"
               loading="lazy"
             />
-          ) : (
-            <div class="default-row-box"></div>
-          )}
-        </div>
-      </article>
-    ))}
-  </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  ) : (
+    <div class="articles-list empty-list">
+      <div class="recent-empty-state">
+        <div class="empty-bracket-tag">[ 0 ARTICLES PUBLISHED ]</div>
+        <p class="empty-desc">No additional articles have been published to the archive yet.</p>
+      </div>
+    </div>
+  )}
 </section>
 
 <style>
@@ -91,6 +104,14 @@ const { articles } = Astro.props;
   :root[data-theme="dark"] .recent-badge {
     background-color: var(--color-offwhite);
     color: var(--color-black);
+  }
+
+  .recent-status-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--text-secondary);
+    letter-spacing: 0.05em;
   }
 
   .view-all-link {
@@ -190,6 +211,37 @@ const { articles } = Astro.props;
     height: 44px;
     object-fit: contain;
     image-rendering: pixelated;
+  }
+
+  /* Empty state styling */
+  .empty-list {
+    justify-content: center;
+    min-height: 220px;
+  }
+
+  .recent-empty-state {
+    padding: 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .empty-bracket-tag {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--accent-blue);
+    letter-spacing: 0.05em;
+  }
+
+  .empty-desc {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
   }
 
   @media (max-width: 600px) {

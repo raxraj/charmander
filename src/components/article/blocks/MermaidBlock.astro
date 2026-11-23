@@ -1,0 +1,98 @@
+---
+import type { MermaidBlock as MermaidBlockType } from '../../../data/types';
+
+interface Props {
+  block: MermaidBlockType;
+}
+
+const { block } = Astro.props;
+---
+
+<div class="article-block mermaid-block">
+  {block.title && <div class="block-label">{block.title}</div>}
+  <div class="mermaid-target" data-mermaid-source={block.code}>
+    <pre class="mermaid-fallback"><code>{block.code}</code></pre>
+  </div>
+</div>
+
+<script>
+  // Mermaid is loaded on demand, only when at least one diagram exists on the page.
+  // The CMS supplies diagram source text, never executable script.
+  (async () => {
+    const targets = Array.from(document.querySelectorAll<HTMLElement>('[data-mermaid-source]'));
+    if (targets.length === 0) return;
+
+    let renderCounter = 0;
+
+    const renderAll = async () => {
+      let mermaid: typeof import('mermaid')['default'];
+      try {
+        mermaid = (await import('mermaid')).default;
+      } catch {
+        return; // Keep the readable source fallback.
+      }
+
+      const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'strict',
+        theme: dark ? 'dark' : 'default',
+      });
+
+      for (const target of targets) {
+        const source = target.dataset.mermaidSource || '';
+        if (!source) continue;
+        try {
+          const { svg } = await mermaid.render(`sourcastic-mermaid-${renderCounter++}`, source);
+          target.innerHTML = svg;
+          target.classList.add('mermaid-rendered');
+        } catch {
+          // Invalid diagram syntax: leave the original source visible and
+          // continue rendering the rest of the article.
+        }
+      }
+    };
+
+    await renderAll();
+
+    new MutationObserver(() => {
+      void renderAll();
+    }).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    });
+  })();
+</script>
+
+<style>
+  .mermaid-block {
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    background-color: var(--bg-primary);
+  }
+
+  .mermaid-target {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .mermaid-fallback {
+    margin: 0;
+    padding: 1rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+    background-color: var(--bg-secondary);
+    border: 1px dashed var(--border-color);
+    color: var(--text-primary);
+  }
+
+  .mermaid-target.mermaid-rendered :global(svg) {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+  }
+</style>

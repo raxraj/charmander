@@ -1,0 +1,141 @@
+---
+import type { DemoBlock } from '../../../data/types';
+
+interface Props {
+  block: DemoBlock;
+}
+
+const { block } = Astro.props;
+
+const nodes = block.nodes.map((node, index) => ({
+  ...node,
+  x: (node.column ?? (index % 3)) * 230 + 20,
+  y: (node.row ?? Math.floor(index / 3)) * 110 + 20,
+}));
+const width = Math.max(260, ...nodes.map((node) => node.x + 200));
+const height = Math.max(120, ...nodes.map((node) => node.y + 90));
+
+const edges = block.edges.flatMap((edge) => {
+  const from = nodes.find((node) => node.id === edge.from);
+  const to = nodes.find((node) => node.id === edge.to);
+  if (!from || !to) return [];
+  const downward = to.y > from.y;
+  return [
+    {
+      x1: from.x + 90,
+      y1: downward ? from.y + 56 : from.y + 28,
+      x2: to.x + 90,
+      y2: downward ? to.y : to.y + 28,
+      label: edge.label,
+      labelX: (from.x + to.x) / 2 + 90,
+      labelY: (from.y + to.y) / 2 + (downward ? 28 : 0),
+    },
+  ];
+});
+---
+
+<div class="article-block demo-block">
+  {block.title && <div class="block-label">{block.title}</div>}
+
+  {
+    block.supported ? (
+      <div class="demo-frame">
+        <svg
+          viewBox={`0 0 ${width} ${height}`}
+          role="img"
+          aria-label={block.title || 'Architecture diagram'}
+          preserveAspectRatio="xMidYMid meet"
+        >
+          {edges.map((edge) => (
+            <g>
+              <line
+                x1={edge.x1}
+                y1={edge.y1}
+                x2={edge.x2}
+                y2={edge.y2}
+                stroke="var(--accent-blue)"
+                stroke-width="2"
+              />
+              {edge.label && (
+                <text x={edge.labelX} y={edge.labelY} class="edge-label" text-anchor="middle">
+                  {edge.label}
+                </text>
+              )}
+            </g>
+          ))}
+          {nodes.map((node) => (
+            <g>
+              <rect
+                x={node.x}
+                y={node.y}
+                width="180"
+                height="56"
+                fill="var(--bg-primary)"
+                stroke="var(--border-color)"
+                stroke-width="2"
+              />
+              <text x={node.x + 90} y={node.y + 34} class="node-label" text-anchor="middle">
+                {node.label}
+              </text>
+            </g>
+          ))}
+        </svg>
+      </div>
+    ) : (
+      <div class="demo-unsupported">
+        <span class="block-label">[ UNSUPPORTED DEMO CONFIGURATION ]</span>
+        <p>This interactive demo could not be rendered safely. Its configuration is missing, malformed, or uses an unsupported kind.</p>
+      </div>
+    )
+  }
+
+  {block.caption && <p class="block-caption">{block.caption}</p>}
+</div>
+
+<style>
+  .demo-block {
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    background-color: var(--bg-primary);
+  }
+
+  .demo-frame {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  svg {
+    display: block;
+    width: 100%;
+    min-width: 320px;
+    height: auto;
+    max-height: 520px;
+  }
+
+  .node-label {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    fill: var(--text-primary);
+  }
+
+  .edge-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    fill: var(--text-secondary);
+  }
+
+  .demo-unsupported {
+    border: 2px dashed var(--border-color);
+    background-color: var(--bg-secondary);
+    padding: 1.25rem;
+  }
+
+  .demo-unsupported p {
+    margin: 0.75rem 0 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+</style>

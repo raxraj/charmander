@@ -1,0 +1,38 @@
+---
+import type { UnsupportedBlock as UnsupportedBlockType } from '../../../data/types';
+
+interface Props {
+  block: UnsupportedBlockType;
+}
+
+const { block } = Astro.props;
+---
+
+<div class="article-block unsupported-block">
+  <span class="block-label">[ UNKNOWN CONTENT BLOCK ]</span>
+  <p>
+    The CMS supplied a content block this publication cannot render:
+    <code>{block.component}</code>
+  </p>
+</div>
+
+<style>
+  .unsupported-block {
+    border: 2px dashed var(--border-color);
+    background-color: var(--bg-secondary);
+    padding: 1.15rem;
+  }
+
+  p {
+    margin: 0.6rem 0 0;
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  code {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+  }
+</style>

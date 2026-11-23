@@ -1,5 +1,10 @@
 import type { Article } from "../types";
 
+/**
+ * Retained for local/component testing only. The homepage no longer uses these
+ * as its content source: FeaturedArticle and RecentWriting are driven by
+ * published Articles from Strapi (see src/lib/strapi).
+ */
 export const featuredArticleFixture: Article = {
   id: "feat-001",
   index: "001",

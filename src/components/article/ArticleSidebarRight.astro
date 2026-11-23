@@ -1,0 +1,31 @@
+---
+import type { ArticleDetail } from '../../data/types';
+import type { RelatedArticle } from '../../lib/article/related';
+import ArticleInfo from './ArticleInfo.astro';
+import RelatedArticles from './RelatedArticles.astro';
+import ArticleShareActions from './ArticleShareActions.astro';
+
+interface Props {
+  article: ArticleDetail;
+  related: RelatedArticle[];
+  readingTime: string;
+  shareUrl: string;
+}
+
+const { article, related, readingTime, shareUrl } = Astro.props;
+---
+
+<div class="sidebar-right-inner">
+  <ArticleInfo article={article} readingTime={readingTime} />
+  <RelatedArticles articles={related} />
+  <ArticleShareActions title={article.seo.title} url={shareUrl} />
+</div>
+
+<style>
+  .sidebar-right-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+</style>

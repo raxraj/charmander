@@ -1,0 +1,65 @@
+---
+import type { ImageBlockData } from '../../../data/types';
+
+interface Props {
+  block: ImageBlockData;
+}
+
+const { block } = Astro.props;
+const hasCaption = Boolean(block.caption || block.attribution);
+---
+
+<figure class="article-block image-block">
+  {
+    block.src ? (
+      <img
+        src={block.src}
+        srcset={block.srcSet}
+        alt={block.alt}
+        sizes="(max-width: 760px) 100vw, 760px"
+        loading="lazy"
+      />
+    ) : (
+      <div class="image-missing" role="img" aria-label="Image unavailable">
+        <span>[ IMAGE UNAVAILABLE ]</span>
+      </div>
+    )
+  }
+  {
+    hasCaption && (
+      <figcaption class="block-caption">
+        {block.caption}
+        {block.attribution && <span> // {block.attribution}</span>}
+      </figcaption>
+    )
+  }
+</figure>
+
+<style>
+  .image-block {
+    border: 1px solid var(--border-color);
+    padding: 0.75rem;
+    background-color: var(--bg-primary);
+  }
+
+  .image-block img {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+  }
+
+  .image-missing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    border: 2px dashed var(--border-color);
+    background-color: var(--bg-secondary);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+  }
+</style>
